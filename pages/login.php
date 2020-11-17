@@ -2,7 +2,7 @@
     
 <?php
 
-if($logged_in == true){
+if($_SESSION['logged'] = true){
     header('Location: admin.php');
 }
 
@@ -31,8 +31,8 @@ if(isset($_POST['login'])){
         echo 'Succès!';
         header('Location: admin.php');
         session_start();
-        $_SESSION['logged'] = true;
-        $logged_in = $_SESSION['logged'];
+        $_COOKIE['id'] = $authors['id'];
+        $_COOKIE['logged'] = true;
     }
 }
 

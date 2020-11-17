@@ -12,7 +12,7 @@ while($articles = mysqli_fetch_assoc($request)){
 <p>
     <h2><?php echo $articles['title'];?></h2>
     <img src="<?php echo $articles['image_url'];?>">
-    <?php echo substr($articles['content'], 0, 300);?>..</a></p></div>
+    <?php echo substr(strip_tags($articles['content']), 0, 300);?>..</div>
     <span><?php echo $articles['firstname'];?></span>
     <span><?php echo $articles['reading_time'];?> minutes</span>
     <span>Publié le <?php echo $articles['published_at'];?></span>

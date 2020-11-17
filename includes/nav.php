@@ -1,16 +1,21 @@
 <nav>
     <ul>
         <li><a href="/">Accueil</a></li>
-        <li>
+    
         <?php
-        
-        if($logged_in == true){
-            echo '<a href="/admin.php">Administration</a>';
+        if($_SESSION['logged'] = true){
+        echo'
+        <li><a href="/admin.php">Administration</a></li>
+        <li><form method="POST"><input type="submit" name="logout" value="Déconnection"></form></li>
+        ';
+        if(isset($_POST['logout'])){
+            session_destroy();
+            $_SESSION['logged'] = false;
+        }
         }
         else{
-            echo '<a href="/?page=login">Login</a>';
+            echo '<li><a href="/?page=login">Login</a></li>';
         }
         ?>
-        </li>
     </ul>
 </nav>

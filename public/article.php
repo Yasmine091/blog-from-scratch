@@ -35,7 +35,7 @@ $article = mysqli_fetch_assoc($request);
 <p>
     <h2><?php echo $article['title'];?></h2>
     <img src="<?php echo $article['image_url'];?>" alt="">
-    <?php echo $article['content'];?>
+    <?php echo strip_tags($article['content'], ['<a>','<br>','<img>','<p>']);?>
     <span><?php echo $article['firstname'];?></span>
     <span><?php echo $article['reading_time'];?> minutes</span>
     <span>Publié le <?php echo $article['published_at'];?></span>
