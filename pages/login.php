@@ -1,42 +1,42 @@
 <main>
-    
-<?php
 
-if($_SESSION['logged'] = true){
-    header('Location: admin.php');
-}
+    <?php
 
-require __DIR__ . '/../core/connexion.php';
+    if (isset($_SESSION['logged'])) {
+        header('Location: admin.php');
+    }
 
-$selectAuthors = ('SELECT * FROM authors');
-$request = mysqli_query($con, $selectAuthors);
-$authors = mysqli_fetch_assoc($request);
+    // je récupere la connexion a la base de données
+    require __DIR__ . '/../core/connexion.php';
 
 
-if(isset($_POST['login'])){
-    $mail = $_POST['mail'];
-    $mdp = $_POST['mdp'];
-    $mdp_md5 = md5($mdp);
+    $selectAuthors = ('SELECT * FROM authors');
+    $request = mysqli_query($con, $selectAuthors);
+    $authors = mysqli_fetch_assoc($request);
 
-    /* echo $mdp . '<br>' . $mdp_md5; */
 
-    /* if(empty($_POST['mail'] or empty($_POST['mdp']))){
+    if (isset($_POST['login'])) {
+        $mail = $_POST['mail'];
+        $mdp = $_POST['mdp'];
+        $mdp_md5 = md5($mdp);
+
+        /* echo $mdp . '<br>' . $mdp_md5; */
+
+        /* if(empty($_POST['mail'] or empty($_POST['mdp']))){
         echo 'Erreur, tu dois remplire tous les champs!';
     } */
 
-    if($mail != $authors['email'] and $mdp_md5 != $authors['password']){
-        echo 'Erreur, identifiants incorrectes!';
+        if ($mail != $authors['email'] and $mdp_md5 != $authors['password']) {
+            echo 'Erreur, identifiants incorrectes!';
+        } else {
+            echo 'Succès!';
+            $_COOKIE['id'] = $authors['id'];
+            $_SESSION['logged'] = true;
+            header('Refresh: 2; URL=admin.php');
+        }
     }
-    else{
-        echo 'Succès!';
-        header('Location: admin.php');
-        session_start();
-        $_COOKIE['id'] = $authors['id'];
-        $_COOKIE['logged'] = true;
-    }
-}
 
-?>
+    ?>
 
     <form action="" method="POST">
         <p>

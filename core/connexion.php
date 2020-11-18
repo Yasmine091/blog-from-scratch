@@ -15,4 +15,3 @@ $con = mysqli_connect($host, $user, $db_pw, $db);
 else {
     echo "Succèss, t'es connectée a la base de données!";
 } */
-
