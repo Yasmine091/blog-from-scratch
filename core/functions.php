@@ -2,17 +2,19 @@
 
 // Récuperer contenu du site
 function contenuSite(){
-    if(!isset($_GET['page'])){
-        include __DIR__.'/../pages/accueil.php';
-    } else {
-    if($_GET['page'] == "login"){
-        include __DIR__.'/../pages/login.php';
-   		 }
-	}
+    switch(isset($_GET['page'])){
+        default: require '../pages/accueil.php';
+        case 'login'; require '../pages/login.php'; break;
+    }
 }
 
 function partieSite($fichier){
-	include __DIR__ .'/../includes/'. $fichier . '.php';
+	include '../includes/'. $fichier . '.php';
 }
 
-?>
+function parametresAdmin(){
+    switch(isset($_GET['articles'])){
+        case isset($_GET['edit']); require '../admin/modifier.php'; break;
+        case isset($_GET['new']); require '../admin/ajouter.php'; break;
+    }
+}

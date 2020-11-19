@@ -10,7 +10,7 @@
     require __DIR__ . '/../core/connexion.php';
 
 
-    $selectAuthors = ('SELECT * FROM authors');
+    $selectAuthors = ("SELECT * FROM authors");
     $request = mysqli_query($con, $selectAuthors);
     $authors = mysqli_fetch_assoc($request);
 
@@ -29,10 +29,10 @@
         if ($mail != $authors['email'] and $mdp_md5 != $authors['password']) {
             echo 'Erreur, identifiants incorrectes!';
         } else {
-            echo 'Succès!';
-            $_COOKIE['id'] = $authors['id'];
+            echo 'Succès! Redirection vers l\'administration..';
+            $_SESSION['id'] = $authors['id'];
             $_SESSION['logged'] = true;
-            header('Refresh: 2; URL=admin.php');
+            header('Refresh: 1; URL=admin.php');
         }
     }
 

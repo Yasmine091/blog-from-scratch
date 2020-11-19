@@ -27,7 +27,7 @@ partieSite('nav');
 
     $id = $_GET['id'];
 
-    $selectArticle = ('SELECT * FROM articles, authors WHERE articles.id = ' . $id . ' AND articles.author_id = authors.id');
+    $selectArticle = ("SELECT * FROM articles, authors WHERE articles.id = '$id' AND articles.author_id = authors.id");
     $request = mysqli_query($con, $selectArticle);
     $article = mysqli_fetch_assoc($request);
 
@@ -39,15 +39,26 @@ partieSite('nav');
         <?php echo strip_tags($article['content'], ['<a>', '<br>', '<img>', '<p>']); ?>
         <span><?php echo $article['firstname']; ?></span>
         <span>Categories :
+
+        
             <?php
-            $selectCategories = ('SELECT * FROM articles_categories
+            $selectCategories = ("SELECT * FROM articles_categories
 JOIN categories ON id = articles_categories.category_id
-WHERE articles_categories.article_id = ' . $id . '');
+WHERE articles_categories.article_id = '$id'");
             $request2 = mysqli_query($con, $selectCategories);
+
+
+            
             while ($categories = mysqli_fetch_assoc($request2)) {
             ?>
+
                 <?php echo $categories['category']; ?>
-            <?php } ?></span>
+
+            <?php } ?>
+        
+        
+        
+        </span>
         <span><?php echo $article['reading_time']; ?> minutes</span>
         <span>Publié le <?php echo $article['published_at']; ?></span>
     </p>
