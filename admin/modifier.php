@@ -3,25 +3,57 @@ require '../core/connexion.php';
 
 $id = $_GET['articles'];
 
+
+if(isset($_POST['del-cat'])){
+    $cat = $_POST['cat'];
+    $delCategory = ("DELETE FROM articles_categories WHERE article_id = '$id'");
+    mysqli_query($con, $delCategory);
+    echo 'La categorie à été supprimé avec succès!';
+    header('Refresh: 1;');
+}
+
 if (isset($_POST['save'])) {
+
+    // recuperer les categories cochées
+    switch(isset($_POST['save'])){
+        case isset($_POST['cat']) && in_array(1, $_POST['cat']); $cat = $_POST['cat']; break;
+        case isset($_POST['cat']) && in_array(2, $_POST['cat']); $cat = $_POST['cat']; break;
+        case isset($_POST['cat']) && in_array(3, $_POST['cat']); $cat = $_POST['cat']; break;
+        case isset($_POST['cat']) && in_array(4, $_POST['cat']); $cat = $_POST['cat']; break;
+    }
+
+    // enregistrer chaque catégorie cochée
+    if(isset($cat)){
+    for($i = 0; $i <= 4; $i++){
+        if(isset($cat[$i])){
+        $addCategory = ("INSERT INTO articles_categories (`article_id`, `category_id`) VALUES ('$id', '$cat[$i]')");
+        mysqli_query($con, $addCategory);
+        }
+        if(!isset($cat[$i])){
+        $delCategory = ("DELETE FROM articles_categories WHERE article_id = '$id' AND category_id = '$cat[$i]'");
+        $test = mysqli_query($con, $delCategory);
+        var_dump($test);
+        }
+
+    }
+}
 
     $title = $_POST['title'];
     $img = $_POST['img-url'];
 
-    $cat1 = $_POST['cat-1'];
-    $cat2 = $_POST['cat-2'];
-    $cat3 = $_POST['cat-3'];
-    $cat4 = $_POST['cat-4'];
+    $date = date("Y-m-d h:i:s");
 
     $readTime = $_POST['read-t'];
-    $content = $_POST['content'];
+    $getContent = $_POST['content'];
+    $content = mysqli_real_escape_string($con, $getContent);
 
-    /* $ = $_POST[''];
-    $ = $_POST[''];
-    $ = $_POST['']; */
+    $createArticle = ("UPDATE articles 
+    SET title = '$title', content = '$getContent', image_url = '$img', reading_time = '$readTime' WHERE id = '$id'");
+    mysqli_query($con, $createArticle);
+    echo 'L\'article à été modifié avec succès!';
+    //header('Refresh: 1; URL=/admin.php');
+ 
 }
-
-
 
 
 
@@ -42,7 +74,6 @@ if (isset($_GET['edit'])) {
         <input type="text" name="img-url" value="<?php echo $article['image_url']; ?>">
         <br><br>
         <label for="category">Catégorie :</label><br>
-
         <?php
 
         $selectCategories = ('SELECT *, categories.id as id FROM articles_categories
@@ -58,13 +89,13 @@ if (isset($_GET['edit'])) {
             } else {
 
         ?>
-
-                <label for="cat-<?php echo $categories['id']; ?>"><?php echo $categories['category']; ?></label>
-                <input type="checkbox" name="cat-<?php echo $categories['id']; ?>" value="<?php echo $categories['id']; ?>" <?php
-                                                                                                                            if ($categories['article_id'] == $id) {
-                                                                                                                                echo 'checked';
-                                                                                                                            }
-                                                                                                                            ?>>&nbsp;&nbsp;
+                <label for="cat[]"><?php echo $categories['category']; ?></label>
+                <input type="checkbox" name="cat[]" value="<?php echo $categories['id']; ?>"
+                <?php
+                if ($categories['article_id'] === $id) {
+                echo ' checked';
+                }
+                ?>>&nbsp;&nbsp;
         <?php
 
                 $i++;

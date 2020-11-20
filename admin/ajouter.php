@@ -21,7 +21,7 @@ if (isset($_POST['add'])) {
 
     $createArticle = ("INSERT INTO articles (`title`, `content`, `image_url`, `published_at`, `reading_time`, `author_id`)
     VALUES ('$title', '$content', '$img', '$date', '$readTime', '$userID')");
-    mysqli_query($con, $createArticle) or die (mysqli_error($con));
+    mysqli_query($con, $createArticle);
     echo 'L\'article à été ajouté avec succès!';
     header('Refresh: 1; URL=/admin.php');
 
