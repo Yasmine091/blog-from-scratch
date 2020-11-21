@@ -47,8 +47,8 @@ partieSite('nav');
             ("SELECT *, articles.id as artid, authors.id as authid FROM articles
             JOIN authors ON author_id = authors.id
             JOIN articles_categories ON articles.id = articles_categories.article_id
-            WHERE author_id = '$authorID'
-            OR category_id = '$category'");
+            WHERE is_public = 1 AND author_id = '$authorID'
+            OR is_public = 1 AND category_id = '$category'");
         $request = mysqli_query($con, $selectArticle);
 
 

@@ -4,23 +4,14 @@
     require '../core/connexion.php';
 
     ?>
-
-    <!-- Encore un petit bonus
-
-Temps de réalisation: indéterminé
-
-Ajouter une fonctionnalité de recherche.
-
-Si le terme recherché apparait dans le titre, le billet de blog remonte en premier.
-Si le terme recherché apparait dans les catégories, le billet de blog remonte en deuxième.
-Si le terme recherché apparait dans les contenu de l'article, le billet de blog remonte en troisième. -->
-
+    
     <?php
 
 
     $getAllArticles =
         ("SELECT *, articles.id as artid, authors.id as authid FROM articles
         JOIN authors ON author_id = authors.id
+        WHERE is_public = 1
         ORDER BY published_at DESC");
     $request = mysqli_query($con, $getAllArticles);
 

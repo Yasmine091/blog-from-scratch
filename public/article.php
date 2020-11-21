@@ -27,7 +27,7 @@ partieSite('nav');
 
     $id = $_GET['id'];
 
-    $selectArticle = ("SELECT * FROM articles, authors WHERE articles.id = '$id' AND articles.author_id = authors.id");
+    $selectArticle = ("SELECT * FROM articles, authors WHERE articles.id = '$id' AND articles.author_id = authors.id AND is_public = 1");
     $request = mysqli_query($con, $selectArticle);
     $article = mysqli_fetch_assoc($request);
 

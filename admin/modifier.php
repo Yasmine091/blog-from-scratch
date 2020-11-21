@@ -47,9 +47,9 @@ if (isset($_POST['save'])) {
     $getContent = $_POST['content'];
     $content = mysqli_real_escape_string($con, $getContent);
 
-    $createArticle = ("UPDATE articles 
+    $updateArticle = ("UPDATE articles 
     SET title = '$title', content = '$getContent', image_url = '$img', reading_time = '$readTime' WHERE id = '$id'");
-    mysqli_query($con, $createArticle);
+    mysqli_query($con, $updateArticle);
     echo 'L\'article à été modifié avec succès!';
     //header('Refresh: 1; URL=/admin.php');
  
@@ -92,11 +92,11 @@ if (isset($_GET['edit'])) {
         $checkedCat = mysqli_fetch_assoc($chkCat);
 
         ?>  
-                <label for="cat[]"><?php echo $categories['category']; ?></label>
+                <?php echo $categories['category']; ?>
                 <input type="checkbox" name="cat[]" value="<?php echo $categories['id']; ?>"
                 <?php
                 if ($checkedCat['category_id'] === $categories['id']) {
-                echo ' checked>';
+                echo ' checked>&nbsp;&nbsp;';
                 }
                 else{
                     echo '>&nbsp;&nbsp;';
