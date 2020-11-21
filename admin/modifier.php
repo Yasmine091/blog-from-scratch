@@ -2,7 +2,7 @@
 require '../core/connexion.php';
 
 $id = $_GET['articles'];
-
+$userID = $_SESSION['id'];
 
 if(isset($_POST['del-cat'])){
     $cat = $_POST['cat'];
@@ -60,9 +60,10 @@ if (isset($_POST['save'])) {
 
 
 if (isset($_GET['edit'])) {
-    $selectArticle = ('SELECT *, articles.id as id, authors.id as authid FROM articles
+    $selectArticle = ("SELECT *, articles.id as id, authors.id as authid FROM articles
         JOIN authors ON author_id = authors.id
-        WHERE articles.id = ' . $id . '');
+        WHERE articles.id = '$id'
+        AND author_id = '$userID'");
     $request3 = mysqli_query($con, $selectArticle);
     $article = mysqli_fetch_assoc($request3);
 ?>
@@ -76,27 +77,31 @@ if (isset($_GET['edit'])) {
         <label for="category">Catégorie :</label><br>
         <?php
 
-        $selectCategories = ('SELECT *, categories.id as id FROM articles_categories
-                            JOIN categories ON id = articles_categories.category_id');
+        $selectCategories = ("SELECT *, categories.id as id FROM articles_categories
+                            JOIN categories ON id = articles_categories.category_id");
         $reqcat = mysqli_query($con, $selectCategories);
-
-
-
 
         $i = 0;
         while ($categories = mysqli_fetch_assoc($reqcat)) {
             if ($categories['id'] <= $i) {
             } else {
 
-        ?>
+                $checkCategories = ("SELECT * FROM articles_categories
+                WHERE article_id = '$id'");
+        $chkCat = mysqli_query($con, $checkCategories);
+        $checkedCat = mysqli_fetch_assoc($chkCat);
+
+        ?>  
                 <label for="cat[]"><?php echo $categories['category']; ?></label>
                 <input type="checkbox" name="cat[]" value="<?php echo $categories['id']; ?>"
                 <?php
-                if ($categories['article_id'] === $id) {
-                echo ' checked';
+                if ($checkedCat['category_id'] === $categories['id']) {
+                echo ' checked>';
                 }
-                ?>>&nbsp;&nbsp;
-        <?php
+                else{
+                    echo '>&nbsp;&nbsp;';
+                }
+
 
                 $i++;
             }

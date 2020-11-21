@@ -24,10 +24,6 @@ if (isset($_POST['add'])) {
     mysqli_query($con, $createArticle);
     echo 'L\'article à été ajouté avec succès!';
     header('Refresh: 1; URL=/admin.php');
-
-    /* $ = $_POST[''];
-    $ = $_POST[''];
-    $ = $_POST['']; */
 }
 
 if (isset($_GET['new'])) {
@@ -39,7 +35,7 @@ if (isset($_GET['new'])) {
         <label for="img-url">Lien de l'image / visuel :</label><br>
         <input type="text" name="img-url" placeholder="https://google.fr/monchat.png">
         <br><br>
-        <label for="category">Catégories :</label><br>
+        <!--         <label for="category">Catégories :</label><br>
 
         <label for="cat-1">API</label>
         <input type="checkbox" name="cat-1" value="1">&nbsp;&nbsp;
@@ -50,7 +46,7 @@ if (isset($_GET['new'])) {
         <label for="cat-4">VS Code</label>
         <input type="checkbox" name="cat-4" value="4">&nbsp;&nbsp;
 
-        <br><br>
+        <br><br> -->
         <label for="read-t">Temps de lecture : (en minutes)</label><br>
         <input type="number" name="read-t" value="0">
         <br><br>

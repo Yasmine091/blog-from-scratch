@@ -22,19 +22,25 @@ partieSite('nav');
 // contenu de mon site
 ?>
 <main>
-    <h2>Admin</h2>
-    <p>
+
+    <div class="corps"><br>
+        <h2>Administration</h2><br>
+        <hr><br>
         <form method="GET">
             <select name="articles">
+                <option selected="selected" name="sel" disabled>-- Choisir un article --</option>
                 <?php
                 // verifier qu'on est bien connecté, si non revenir a l'accueil
                 if (!isset($_SESSION['logged'])) {
                     header('Location: /');
                 }
 
-                $getAllArticles = ('SELECT *, articles.id as id, authors.id as authid FROM articles
+                $userID = $_SESSION['id'];
+
+                $getAllArticles = ("SELECT *, articles.id as id, authors.id as authid FROM articles
         JOIN authors ON author_id = authors.id
-        ORDER BY published_at DESC');
+        WHERE author_id = '$userID'
+        ORDER BY published_at DESC");
                 $request = mysqli_query($con, $getAllArticles);
                 ?>
 
@@ -47,15 +53,14 @@ partieSite('nav');
                 <?php
                 }
                 ?>
-            </select><br>
+            </select><br><br>
             <input type="submit" name="edit" value="Modifier l'article">
             <input type="submit" name="del" value="Supprimer l'article">
             <input type="submit" name="new" value="Ajouter un article">
         </form>
-
-        <p>
-            <?php
-            // récuperer l'article pour le modifier / supprimer
+        <?php
+        // récuperer l'article pour le modifier / supprimer
+        if (isset($_GET)) {
             if (isset($_GET['articles'])) {
                 $id = $_GET['articles'];
 
@@ -67,11 +72,26 @@ partieSite('nav');
                     echo "L'article a été supprimé avec succès!";
                     header('Refresh: 1; URL=/admin.php');
                 }
-
-                parametresAdmin();
+                echo '<br><hr><br><br>';
+                parametresAdmin('edit');
             }
+            if (isset($_GET['new'])) {
+                echo '<br><hr><br><br>';
+                parametresAdmin('add');
+            }
+        }
+
+        else{
             ?>
-        </p>
+
+            
+
+
+
+            <?php
+        }
+        ?>
+    </div>
 </main>
 <?php
 // récuperer le footer
