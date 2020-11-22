@@ -25,18 +25,18 @@ partieSite('nav');
     <?php
 
 
-    if (isset($_GET['search'])) {
+    if (isset($_GET['filter'])) {
 
         // je recupere la recherche effectuée
-        $recherche = $_GET['rech'];
-        $category = $_GET['cat'];
+
+        $authorName = $_GET['author'] ?? null;
+        $category = $_GET['cat'] ?? null;
 
         // je récupere l'ID de l'auteur
-        $getAuthor = ("SELECT * FROM authors WHERE firstname = '$recherche' OR lastname = '$recherche'");
+        $getAuthor = ("SELECT * FROM authors WHERE firstname = '$authorName' OR lastname = '$authorName'");
         $reqID = mysqli_query($con, $getAuthor);
         $author = mysqli_fetch_assoc($reqID);
 
-        // je récupere toutes les id nécessaires
         // le ?? c'est une sorte de si non, la je lui dis
         // que s'il n'y a pas de valeur, donc c'est null
         $authorID = $author['id'] ?? null;
@@ -48,12 +48,9 @@ partieSite('nav');
             ("SELECT *, articles.id as artid, authors.id as authid FROM articles
             JOIN authors ON author_id = authors.id
             JOIN articles_categories ON articles.id = articles_categories.article_id
-            WHERE is_public = 1 # si l'article est visible
-            AND title LIKE '% $recherche %'
+            WHERE author_id = '$authorID'
             OR category_id = '$category'
-            OR content LIKE '% $recherche %'
-            OR author_id = '$authorID'
-            ORDER BY title, category_id, content");
+            AND is_public = 1");
         $request = mysqli_query($con, $selectArticle);
 
         $i = 0;
@@ -76,21 +73,21 @@ partieSite('nav');
                         <span>Temps de lecture : <?php echo $articles['reading_time']; ?> min</span>
                         <span>Categories :</span>
 
-                            <?php
-                            $selectCategories = ("SELECT * FROM articles_categories
+                        <?php
+                        $selectCategories = ("SELECT * FROM articles_categories
                     JOIN categories ON id = category_id
                     WHERE article_id = '$articleID'");
-                            $request2 = mysqli_query($con, $selectCategories);
+                        $request2 = mysqli_query($con, $selectCategories);
 
-                            while ($categories = mysqli_fetch_assoc($request2)) {
-                            ?>
-                                <span><a href="/filter.php?author=&cat=<?php echo $categories['id']; ?>&filter=Filtrer"><?php echo $categories['category']; ?></a></span>
+                        while ($categories = mysqli_fetch_assoc($request2)) {
+                        ?>
+                            <span><a href="/filter.php?author=&cat=<?php echo $categories['id']; ?>&filter=Filtrer"><?php echo $categories['category']; ?></a></span>
 
-                            <?php } ?>
+                        <?php } ?>
 
 
 
-                        </span>
+
                         <button><a href="/article.php?id=<?php echo $articleID; ?>">Lire la suite</a></button>
                     </p>
                 </div>

@@ -4,7 +4,7 @@
     require '../core/connexion.php';
 
     ?>
-    
+
     <?php
 
 
@@ -28,25 +28,25 @@
                 <?php echo substr(strip_tags($articles['content']), 0, 300); ?>..
                 <hr>
             </div>
-            <p><span>Auteur : <?php echo $articles['firstname']; ?> <?php echo $articles['lastname']; ?></span>
+            <p><span>Auteur : <a href="filter.php?author=<?php echo $articles['firstname']; ?>&cat=&filter=Filtrer"><?php echo $articles['firstname']; ?> <?php echo $articles['lastname']; ?></a></span>
                 <span>Publié le : <?php echo $articles['published_at']; ?></span><br><br>
                 <span>Temps de lecture : <?php echo $articles['reading_time']; ?> min</span>
-                <span>Categories :
+                <span>Categories :</span>
 
-                    <?php
-                    $selectCategories = ("SELECT * FROM articles_categories
+                <?php
+                $selectCategories = ("SELECT * FROM articles_categories
 JOIN categories ON id = articles_categories.category_id
 WHERE articles_categories.article_id = '$articleID'");
-                    $request2 = mysqli_query($con, $selectCategories);
+                $request2 = mysqli_query($con, $selectCategories);
 
-                    while ($categories = mysqli_fetch_assoc($request2)) {
-                    ?>
-                        <?php echo $categories['category']; ?>,
-                    <?php } ?>
+                while ($categories = mysqli_fetch_assoc($request2)) {
+                ?>
+                    <span><a href="/filter.php?author=&cat=<?php echo $categories['id']; ?>&filter=Filtrer"><?php echo $categories['category']; ?></a></span>
+                <?php } ?>
 
 
 
-                </span>
+
                 <button><a href="/article.php?id=<?php echo $articleID; ?>">Lire la suite</a></button>
             </p>
         </div>

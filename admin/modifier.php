@@ -30,9 +30,10 @@ if (isset($_POST['save'])) {
         mysqli_query($con, $addCategory);
         }
         if(!isset($cat[$i])){
-        $delCategory = ("DELETE FROM articles_categories WHERE article_id = '$id' AND category_id = '$cat[$i]'");
+            foreach($cat as $dl => $delCat){
+        $delCategory = ("DELETE FROM articles_categories WHERE article_id = '$id' AND category_id = '$delCat'");
         $test = mysqli_query($con, $delCategory);
-        var_dump($test);
+            }
         }
 
     }
@@ -47,9 +48,9 @@ if (isset($_POST['save'])) {
     $getContent = $_POST['content'];
     $content = mysqli_real_escape_string($con, $getContent);
 
-    $updateArticle = ("UPDATE articles 
+    $createArticle = ("UPDATE articles 
     SET title = '$title', content = '$getContent', image_url = '$img', reading_time = '$readTime' WHERE id = '$id'");
-    mysqli_query($con, $updateArticle);
+    mysqli_query($con, $createArticle);
     echo 'L\'article à été modifié avec succès!';
     //header('Refresh: 1; URL=/admin.php');
  
@@ -95,8 +96,8 @@ if (isset($_GET['edit'])) {
                 <?php echo $categories['category']; ?>
                 <input type="checkbox" name="cat[]" value="<?php echo $categories['id']; ?>"
                 <?php
-                if ($checkedCat['category_id'] === $categories['id']) {
-                echo ' checked>&nbsp;&nbsp;';
+                if ($categories['id'] === ($checkedCat['category_id'] ?? null)) {
+                echo ' checked>';
                 }
                 else{
                     echo '>&nbsp;&nbsp;';
