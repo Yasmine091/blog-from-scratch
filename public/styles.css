@@ -84,7 +84,7 @@ nav ul li {
     display: block;
     margin: 20px auto;
     height: 250px;
-    width: 100%;
+    width: auto;
     max-width: 1150px;
     background-color: rgb(26, 31, 44);
     border-radius: 5px;
@@ -95,7 +95,7 @@ nav ul li {
     margin: 20px auto;
     height: auto;
     max-width: 1080px;
-    width: 100%;
+    width: auto;
     background-color: rgb(26, 31, 44);
     border-radius: 5px;
     padding: 15px 35px 35px 35px;
@@ -172,7 +172,7 @@ nav ul li {
     margin: 20px auto;
     height: auto;
     max-width: 1080px;
-    width: 100%;
+    width: auto;
     background-color: rgb(26, 31, 44);
     color: rgb(67, 221, 67);
     border-radius: 5px;

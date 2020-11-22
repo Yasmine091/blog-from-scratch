@@ -1,10 +1,8 @@
+<?php
+require '../core/connexion.php';
+?>
+
 <main>
-    <?php
-
-    require '../core/connexion.php';
-
-    ?>
-
     <?php
 
 

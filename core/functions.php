@@ -3,11 +3,19 @@
 // Récuperer contenu du site
 function contenuSite()
 {
-    switch (isset($_GET['page'])) {
-        case 'login';
+    if (isset($_GET['page'])) {
+
+        $page = $_GET['page'];
+
+        if ($page == 'rechercher'){
+            require '../pages/rechercher.php';
+        }
+
+        if($page == 'login'){
             require '../pages/login.php';
-            break;
-        default:
+        }
+    }
+    else{
             require '../pages/accueil.php';
     }
 }

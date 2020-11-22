@@ -18,6 +18,8 @@ require '../core/functions.php';
 // récuperer le header
 partieSite('header');
 partieSite('nav');
+partieSite('search_bars');
+
 ?>
 
 <main>
