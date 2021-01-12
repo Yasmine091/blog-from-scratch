@@ -1,7 +1,7 @@
 ## Guide d'installation
 * Pour installer et configurer le site, fais ceci dans le terminal :
 ```
-    · git clone git@gitlab.com:Yasmine091/blog-from-scratch.git
+    git clone git@gitlab.com:Yasmine091/blog-from-scratch.git
     cd blog-from-scratch/
     cd core/
     cp demo.connexion.php connexion.php
