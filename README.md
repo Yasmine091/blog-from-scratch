@@ -14,5 +14,8 @@
     php -S 0.0.0.0:8000
 ```
 
+## Version en ligne
+* https://proj1.crealivity.eu
+
 ## Ressources du projet
 * Wireframe : https://www.figma.com/file/IhDWwD4d35BQKwXFTYUswL/Wireframe-Blog-from-scratch?node-id=0%3A1
